@@ -51,15 +51,9 @@ impl<A: Alignment> AlignedSlice<A> {
         }
 
         // SAFETY:
-        // - First transmute is safe because of repr(transparent).
-        // - The offset_in_bytes is guaranteed to retain alignment, since it is calculated above
-        //   as a multiple of A::size() and the slice was aligned at the beginning.
-        // - Second transmute is safe because of repr(transparent) and the alignment guarantee
-        //   being satisfied as above.
-        unsafe {
-            let slice: &[u8] = std::mem::transmute(self);
-            std::mem::transmute(&slice[offset_in_bytes..])
-        }
+        // - repr(transparent) + the offset_in_bytes is guaranteed to retain alignment,
+        // since it is calculated above as a multiple of A::size() and the slice was aligned at the beginning.
+        unsafe { std::mem::transmute(&self[offset_in_bytes..]) }
     }
 
     /// Return an iterator over consecutive aligned blocks of the slice.
