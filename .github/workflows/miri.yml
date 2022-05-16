@@ -1,0 +1,68 @@
+# cspell:disable
+name: Miri
+
+on:
+  push:
+    branches: [ main, ci ]
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  miri:
+    name: Miri matrix
+    runs-on: ${{ matrix.target.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        target: 
+          - os: ubuntu-latest
+            triple: x86_64-unknown-linux-gnu
+            simd: true
+            feature: avx2
+          - os: ubuntu-latest
+            triple: aarch64-unknown-linux-gnu
+            simd: false
+          - os: ubuntu-latest
+            triple: i686-unknown-linux-gnu
+            simd: true
+            feature: avx2
+          - os: ubuntu-latest
+            triple: arm-unknown-linux-gnueabihf
+            simd: false
+          - os: ubuntu-latest
+            triple: mips-unknown-linux-gnu
+            simd: false
+          - os: ubuntu-latest
+            triple: mips64-unknown-linux-gnuabi64
+            simd: false 
+          - os: windows-latest
+            triple: i686-pc-windows-gnu
+            simd: true
+            feature: avx2
+          - os: windows-latest
+            triple: i686-pc-windows-msvc
+            simd: true
+            feature: avx2
+          - os: ubuntu-latest # xargo fails on macos-latest for some reason
+            triple: x86_64-apple-darwin
+            simd: true
+            feature: avx2
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+      - name: Rustup nightly toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          components: miri
+          override: true
+          default: true
+      - name: Miri test ${{ matrix.target.simd == true && 'simd' || '' }}
+        uses: actions-rs/cargo@v1
+        with:
+          command: miri
+          args: test --target ${{ matrix.target.triple }} ${{ matrix.target.simd == true && '' || '--no-default-features' }}
+        env:
+          RUSTFLAGS: ${{ matrix.target.feature && format('-C target-feature=+{0}', matrix.target.feature) || '' }}
+          MIRIFLAGS: "-Zmiri-symbolic-alignment-check -Zmiri-strict-provenance"
+          MIRI_BACKTRACE: 1

@@ -67,7 +67,9 @@ unsafe impl Alignment for Page {
                 let size = page_size::get();
 
                 if size.next_power_of_two() != size {
-                    panic!("detected page size that is not a power of two, this is unsupported");
+                    panic!(
+                        "detected page size {size} that is not a power of two, this is unsupported"
+                    );
                 }
 
                 size
