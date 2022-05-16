@@ -49,21 +49,26 @@ jobs:
             ~/.cargo/git/db/
             target/
           key: ${{ matrix.os }}-${{ matrix.rust }}-${{ matrix.target_feature }}-cargo-${{ hashFiles('**/Cargo.toml') }}
-      - name: Install cargo-all-features
+      - name: Install cargo-hack
         if: steps.cache-restore.outputs.cache-hit != 'true'
-        uses: taiki-e/install-action@cargo-hack
+        uses: actions-rs/cargo@v1
+        with:
+          command: install
+          args: cargo-hack
         env:
           CARGO_TARGET_DIR: target/
       - name: Build all feature sets
         uses: actions-rs/cargo@v1
         with:
-          command: hack build --feature-powerset --skip default
+          command: hack
+          args: build --feature-powerset --skip default
         env:
           RUSTFLAGS: "-C target-feature=+${{ matrix.target_feature }} --deny warnings"
       - name: Test all feature sets
         uses: actions-rs/cargo@v1
         with:
-          command: hack test --feature-powerset --skip default
+          command: hack
+          args: test --feature-powerset --skip default
         env:
           RUSTFLAGS: "-C target-feature=+${{ matrix.target_feature }} --deny warnings"
 
