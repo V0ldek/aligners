@@ -25,7 +25,7 @@ pub use cmp::*;
 /// Because the used `repr` is [`transparent`](https://doc.rust-lang.org/reference/type-layout.html#the-transparent-representation),
 /// it is possible to directly [`std::mem::transmute`] a [`[u8]`] into an [`AlignedSlice<A>`] (and vice-versa).
 /// This is only safe if the original slice is already aligned to [`A::size()`](`Alignment::size`).
-/// Using unaligned bytes in a place that requires alignment is usually undefined behavior.
+/// Using unaligned bytes in a place that requires alignment is usually undefined behaviour.
 #[repr(transparent)]
 pub struct AlignedSlice<A: Alignment> {
     phantom: std::marker::PhantomData<A>,
@@ -153,7 +153,6 @@ impl<A: Alignment> Deref for AlignedBytes<A> {
         // SAFETY:
         // - the `data` pointer is a `NonNull` pointer to a single allocated object of size exactly `self.size`
         //   and is properly aligned since proper alignment for `u8` is 1;
-        // -
         unsafe {
             let slice = std::slice::from_raw_parts(self.as_ptr(), self.len());
             std::mem::transmute(slice)
