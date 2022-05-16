@@ -26,7 +26,7 @@ body = """
             {% endfor %}\
         {% endif %}\
         {% if commit.links %}
-            <tiny>Related issues:\
+            <tiny>Related issues: \
             {% for link in commit.links %}\
                 [{{ link.text }}]({{ link.href }}) \
             {% endfor %}\
@@ -54,7 +54,7 @@ commit_parsers = [
     { message = "^perf", group = "3Performance"},
     { message = "^test", group = "4Reliability"},
     { message = "^ci", group = "4Reliability"},
-    { message = "^chore", group = "5Dependencies"},
+    { message = "^deps", group = "5Dependencies"},
 ]
 # filter out the commits that are not matched by commit parsers
 filter_commits = true
