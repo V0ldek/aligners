@@ -71,6 +71,8 @@ jobs:
           RUSTFLAGS: "-C target-feature=+${{ matrix.target_feature }} --deny warnings"
 
   clippy:
+    permissions:
+      checks: write
     name: Clippy (stable)
     runs-on: ubuntu-latest
     steps:
@@ -98,6 +100,8 @@ jobs:
         RUSTFLAGS: "-C target-feature=+avx2"
 
   clippy-nightly:
+    permissions:
+      checks: write
     name: Clippy (nightly)
     runs-on: ubuntu-latest
     steps:
