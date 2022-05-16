@@ -17,6 +17,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
+          ref: main
           fetch-depth: 0
       - name: Generate a changelog
         uses: orhun/git-cliff-action@v1
@@ -61,7 +62,7 @@ jobs:
           RUSTFLAGS: "-C target-feature=+avx2"
       - name: Generate deps.png
         run: cargo deps | dot -Tpng > deps.png
-      - name: Commit
+      - name: Commit and push
         uses: EndBug/add-and-commit@v9
         with:
           add: "CHANGELOG.md --force deps.png --force"
