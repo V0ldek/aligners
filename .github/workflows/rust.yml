@@ -51,26 +51,25 @@ jobs:
           key: ${{ matrix.os }}-${{ matrix.rust }}-${{ matrix.target_feature }}-cargo-${{ hashFiles('**/Cargo.toml') }}
       - name: Install cargo-all-features
         if: steps.cache-restore.outputs.cache-hit != 'true'
-        uses: actions-rs/cargo@v1
-        with:
-          command: install
-          args: cargo-all-features
+        uses: taiki-e/install-action@cargo-hack
         env:
           CARGO_TARGET_DIR: target/
       - name: Build all feature sets
         uses: actions-rs/cargo@v1
         with:
-          command: build-all-features
+          command: hack build --feature-powerset --skip default
         env:
           RUSTFLAGS: "-C target-feature=+${{ matrix.target_feature }} --deny warnings"
       - name: Test all feature sets
         uses: actions-rs/cargo@v1
         with:
-          command: test-all-features
+          command: hack test --feature-powerset --skip default
         env:
           RUSTFLAGS: "-C target-feature=+${{ matrix.target_feature }} --deny warnings"
 
   clippy:
+    permissions:
+      checks: write
     name: Clippy (stable)
     runs-on: ubuntu-latest
     steps:
@@ -98,6 +97,8 @@ jobs:
         RUSTFLAGS: "-C target-feature=+avx2"
 
   clippy-nightly:
+    permissions:
+      checks: write
     name: Clippy (nightly)
     runs-on: ubuntu-latest
     steps:
