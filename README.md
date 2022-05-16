@@ -1,5 +1,7 @@
 # `align` &ndash; strongly typed memory alignment guarantees
 
+[![Rust](https://github.com/V0ldek/align/actions/workflows/rust.yml/badge.svg)](https://github.com/V0ldek/align/actions/workflows/rust.yml)
+
 Some bytes just need to be aligned. Want to process bytes in batches of $8$ by interpreting them as `u64`? They must be $8$-byte aligned. Want to run SIMD operations on your bytes? You need to use special unaligned instructions and risk performance, or align them with target's requirements. Maybe your high-performance algorithm requires page alignment?
 
 Validating that something is aligned is hard. `align` solves this problem by introducing strongly typed alignment types. To have your bytes aligned to a page boundary on the target architecture, all you need to do is:
