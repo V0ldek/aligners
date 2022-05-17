@@ -45,7 +45,7 @@ impl<A: Alignment> AlignedBytes<A> {
     ///
     /// # Safety
     /// The memory used by the bytes might not be initialized, which makes reading
-    /// from them undefined behavior (yes, [even for `u8` reading uninitialized bytes is UB](https://doc.rust-lang.org/std/mem/union.MaybeUninit.html#initialization-invariant)).
+    /// from them undefined behaviour (yes, [even for `u8` reading uninitialized bytes is UB](https://doc.rust-lang.org/std/mem/union.MaybeUninit.html#initialization-invariant)).
     /// To use the bytes you must first initialize them manually.
     ///
     /// If you want zeroed bytes, use [`AlignedBytes::new_zeroed`] instead.
@@ -59,10 +59,6 @@ impl<A: Alignment> AlignedBytes<A> {
 
     // Extracted so that this fn isn't all in an `unsafe` context by default.
     fn new_impl(size: usize) -> Self {
-        if size == 0 {
-            return Self::default();
-        }
-
         if size > (isize::MAX as usize) {
             panic!("cannot allocate more than `isize::MAX` bytes, attempted to allocate {size}");
         }
@@ -249,10 +245,36 @@ impl<A: Alignment> std::fmt::Debug for AlignedBytes<A> {
 impl<A: Alignment> Default for AlignedBytes<A> {
     #[inline]
     fn default() -> Self {
+        // SAFETY:
+        // A zero-sized allocation can be represented by any pointer that is
+        // 1. non-null
+        // 2. properly aligned
+        // The simplest value that satisfies this is just the alignment value reinterpreted as a pointer.
+        // This is the strategy used by the standard library for zero-sized allocations
+        // (like a Box::new(()), or of any other ZST), usually employed by calling NonNull::dangling().
+        // This is the same implementation (https://doc.rust-lang.org/src/core/ptr/non_null.rs.html#88),
+        // but for `A::size()` alignment.
+        // The only requirement of new_unchecked is the pointer being not-null, and A::size() must be > 0.
+        let bytes_ptr = unsafe {
+            let raw_ptr = A::size() as *mut u8;
+            NonNull::new_unchecked(raw_ptr)
+        };
         Self {
-            bytes_ptr: NonNull::dangling(),
+            bytes_ptr,
             size: 0,
-            phantom: std::marker::PhantomData {},
+            phantom: Default::default(),
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::{alignment, AlignedBytes};
+
+    #[test]
+    fn empty_bytes_are_aligned() {
+        let empty: AlignedBytes<alignment::Eight> = Default::default();
+
+        assert_eq!(0, empty.as_ptr().align_offset(8));
     }
 }
