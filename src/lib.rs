@@ -106,6 +106,21 @@
 //! assert_eq!(ptr.align_offset(alignment::SimdBlock::size()), 0);
 //! assert_eq!(aligned, possibly_unaligned);
 //! ```
+//!
+//! ## Note on alignment checking
+//!
+//! Checking alignment is hard. [`std::ptr::align_offset`] can return [`std::usize::MAX`]
+//! without any reason and it explicitly says that it should not be relied on for correctness.
+//!
+//! The above examples ignore that for assertion purposes, because there is no better way.
+//! In reality, the check in [`align_offset`](std::ptr::align_offset) just checks the remainder
+//! of the pointer's integer representation, plus some additional bounds checking, so it is
+//! fine for testing purposes on most platforms.
+//!
+//! This is an additional benefit of using `aligners`, as it is a strong guarantee on alignment.
+//!
+//! If you disagree with this assesment, feel free to [contribute to this StackOverflow question](https://stackoverflow.com/questions/71972143/assert-that-a-pointer-is-aligned-to-some-value).
+//!
 
 pub mod alignment;
 mod bytes;
