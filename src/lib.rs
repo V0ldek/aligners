@@ -22,6 +22,9 @@
 // feature(doc_cfg) is nightly (https://doc.rust-lang.org/unstable-book/language-features/doc-cfg.html)
 // Since we don't want the entire crate to be nightly, this is enabled only when building documentation.
 #![cfg_attr(docsrs, feature(doc_cfg))]
+// Same goes for the revolutionary "link to pointers documentation" feature.
+// (https://github.com/rust-lang/rust/issues/80896).
+#![cfg_attr(docsrs, feature(intra_doc_pointers))]
 
 //! Structures providing guarantees on byte sequence alignment.
 //!
