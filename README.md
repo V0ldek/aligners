@@ -1,8 +1,16 @@
 # `aligners` &ndash; strongly typed memory alignment guarantees
 
 [![Rust](https://github.com/V0ldek/aligners/actions/workflows/rust.yml/badge.svg)](https://github.com/V0ldek/aligners/actions/workflows/rust.yml)
+![docs.rs](https://img.shields.io/docsrs/aligners?logo=docs.rs)
+![GitHub last commit](https://img.shields.io/github/last-commit/v0ldek/aligners?logo=github)
 
-Some bytes just need to be aligned. Want to process bytes in batches of $8$ by interpreting them as `u64`? They must be $8$-byte aligned. Want to run SIMD operations on your bytes? You need to use special unaligned instructions and risk performance, or align them with target's requirements. Maybe your high-performance algorithm requires page alignment?
+![Crates.io](https://img.shields.io/crates/v/aligners?logo=docs.rs)
+![GitHub Release Date](https://img.shields.io/github/release-date/v0ldek/aligners)
+
+![Crates.io](https://img.shields.io/crates/l/aligners)
+![Lines of code](https://img.shields.io/tokei/lines/github/v0ldek/aligners?label=LoC&logo=rust)
+
+Some bytes just need to be aligned. Want to process bytes in batches of 8 by interpreting them as `u64`? They must be 8-byte aligned. Want to run SIMD operations on your bytes? You need to use special unaligned instructions and risk performance, or align them with target's requirements. Maybe your high-performance algorithm requires page alignment?
 
 Validating that something is aligned is hard. `aligners` solves this problem by introducing strongly typed alignment types. To have your bytes aligned to a page boundary on the target architecture, all you need to do is:
 
@@ -14,6 +22,10 @@ let aligned: AlignedBytes<alignment::Page> = bytes.into();
 ```
 
 That's it. `AlignedBytes<A>` owns the bytes. By taking a reference you get `&AlignedSlice<A>`, which is basically the same as `&[u8]`, only that its alignment is guaranteed by the type.
+
+## Status
+
+This crate is under active development and the API is unstable. It contains the MVP of being able to align your bytes to page or SIMD-block boundary and iterate over aligned blocks.
 
 ## Unsafety
 
