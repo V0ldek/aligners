@@ -206,19 +206,44 @@ impl<A: Alignment> std::fmt::Debug for AlignedSlice<A> {
 impl<A: Alignment> Default for &AlignedSlice<A> {
     #[inline]
     fn default() -> Self {
-        let default_slice: &[u8] = Default::default();
+        let default_bytes: AlignedBytes<A> = Default::default();
         // SAFETY:
         // Using AlignedSlice's repr(transparent).
-        unsafe { std::mem::transmute(default_slice) }
+        unsafe {
+            let slice = std::slice::from_raw_parts(default_bytes.as_ptr(), 0);
+            std::mem::transmute(slice)
+        }
     }
 }
 
 impl<A: Alignment> Default for &mut AlignedSlice<A> {
     #[inline]
     fn default() -> Self {
-        let default_slice: &mut [u8] = Default::default();
+        let mut default_bytes: AlignedBytes<A> = Default::default();
         // SAFETY:
         // Using AlignedSlice's repr(transparent).
-        unsafe { std::mem::transmute(default_slice) }
+        unsafe {
+            let slice = std::slice::from_raw_parts_mut(default_bytes.as_mut_ptr(), 0);
+            std::mem::transmute(slice)
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::{alignment, AlignedSlice};
+
+    #[test]
+    fn empty_slice_is_aligned() {
+        let empty: &AlignedSlice<alignment::Eight> = Default::default();
+
+        assert_eq!(0, empty.as_ptr().align_offset(8));
+    }
+
+    #[test]
+    fn empty_mut_slice_is_aligned() {
+        let empty: &mut AlignedSlice<alignment::Eight> = Default::default();
+
+        assert_eq!(0, empty.as_ptr().align_offset(8));
     }
 }
