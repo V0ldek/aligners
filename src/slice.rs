@@ -15,10 +15,7 @@ pub use cmp::*;
 /// # Guarantees
 ///
 /// It is guaranteed that the bytes allocated in this structure are aligned
-/// to an [`A::size()`](`Alignment::size`) byte boundary. Therefore the integer representation
-/// of the pointer obtained by the [`as_ptr`](`std::slice::[]::as_ptr`) (or
-/// [`as_mut_ptr`](`std::slice::[]::as_mut_ptr`)) will be divisible by
-/// [`A::size()`](`Alignment::size`).
+/// to an [`A::size()`](`Alignment::size`) byte boundary.
 ///
 /// # Safety
 ///
