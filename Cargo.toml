@@ -6,9 +6,9 @@ edition = "2021"
 description = "Utilities for alignment guarantees for data."
 readme = "./README.md"
 license = "MIT"
-keywords = ["alignment", "byte", "bytes", "block", "blocks"]
+keywords = ["alignment", "aligned", "align", "byte", "simd"]
 categories = ["memory-management", "rust-patterns"]
-repository = "https://github.com/V0ldek/align"
+repository = "https://github.com/V0ldek/aligners"
 
 [package.metadata.docs.rs]
 rustdoc-args = ["--cfg", "docsrs"]
