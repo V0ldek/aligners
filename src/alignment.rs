@@ -8,7 +8,7 @@ use cfg_if::cfg_if;
 /// - it is constant between calls, i.e. two calls to `size` for the same alignment *MUST* return the same value;
 /// - the value returned is a power of two.
 ///
-/// Violating any of these constraints will cause undefined behavior when the alignment is used
+/// Violating any of these constraints will cause undefined behaviour when the alignment is used
 /// for [`AlignedBytes`](`super::AlignedBytes`).
 pub unsafe trait Alignment {
     /// Size of the alignment.
