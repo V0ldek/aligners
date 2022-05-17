@@ -25,7 +25,7 @@ pub struct SimdBlock {}
 /// # Examples
 #[cfg_attr(not(feature = "simd"), doc = "```ignore")]
 #[cfg_attr(feature = "simd", doc = "```")]
-/// use align::alignment::{self, Alignment};
+/// use aligners::alignment::{self, Alignment};
 ///
 /// assert_eq!(2 * alignment::SimdBlock::size(), alignment::TwoSimdBlocks::size());
 /// ```

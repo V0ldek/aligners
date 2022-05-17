@@ -86,7 +86,7 @@ impl<A: Alignment> AlignedBytes<A> {
     ///
     /// # Examples
     /// ```rust
-    /// # use align::{Aligned, AlignedBytes, alignment::{self, Alignment}};
+    /// # use aligners::{Aligned, AlignedBytes, alignment::{self, Alignment}};
     /// let aligned = AlignedBytes::<alignment::Page>::new_initialize(8, |i| { (i % 2) as u8 });
     /// let ptr = aligned.as_ptr();
     ///

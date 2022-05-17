@@ -32,11 +32,11 @@
 //! # Examples
 //!
 //! ```
-//! # use align::{alignment::{self, Alignment}};
+//! # use aligners::{alignment::{self, Alignment}};
 //! assert_eq!(page_size::get(), alignment::Page::size());
 //! ```
 //! ```
-//! # use align::{Aligned, AlignedBytes, alignment::{self, Alignment}};
+//! # use aligners::{Aligned, AlignedBytes, alignment::{self, Alignment}};
 //! let possibly_unaligned = [1, 2, 3];
 //! let aligned = AlignedBytes::<alignment::Page>::from(possibly_unaligned);
 //! let ptr = aligned.as_ptr();
@@ -48,7 +48,7 @@
 //! To create a new aligned block of bytes it's easiest to use [`new_zeroed`](`AlignedBytes::new_zeroed`).
 //!
 //! ```
-//! # use align::{Aligned, AlignedBytes, alignment::{self, Alignment}};
+//! # use aligners::{Aligned, AlignedBytes, alignment::{self, Alignment}};
 //! let aligned = AlignedBytes::<alignment::Page>::new_zeroed(1024);
 //! let ptr = aligned.as_ptr();
 //!
@@ -61,7 +61,7 @@
 //! if you immediately want to initialize the memory afterwards.
 //!
 //! ```
-//! # use align::{Aligned, AlignedBytes, alignment::{self, Alignment}};
+//! # use aligners::{Aligned, AlignedBytes, alignment::{self, Alignment}};
 //! let mut aligned = unsafe { AlignedBytes::<alignment::Page>::new(1024) };
 //! let ptr = aligned.as_ptr();
 //!
@@ -83,7 +83,7 @@
 //! that initializes all bytes with a function of their index.
 //!
 //! ```
-//! # use align::{Aligned, AlignedBytes, alignment::{self, Alignment}};
+//! # use aligners::{Aligned, AlignedBytes, alignment::{self, Alignment}};
 //! let aligned = AlignedBytes::<alignment::Page>::new_initialize(8, |i| { i as u8 });
 //! let ptr = aligned.as_ptr();
 //!
@@ -98,7 +98,7 @@
 //!
 #![cfg_attr(not(feature = "simd"), doc = "```ignore")]
 #![cfg_attr(feature = "simd", doc = "```")]
-//! # use align::{Aligned, AlignedBytes, alignment::{self, Alignment}};
+//! # use aligners::{Aligned, AlignedBytes, alignment::{self, Alignment}};
 //! let possibly_unaligned = [1, 2, 3];
 //! let aligned = AlignedBytes::<alignment::SimdBlock>::from(possibly_unaligned);
 //! let ptr = aligned.as_ptr();

@@ -19,7 +19,7 @@ pub unsafe trait Alignment {
 ///
 /// # Examples
 /// ```rust
-/// use align::alignment::{self, Alignment};
+/// use aligners::alignment::{self, Alignment};
 ///
 /// assert_eq!(1, alignment::One::size());
 /// ```
@@ -34,7 +34,7 @@ pub struct One {}
 /// # Examples
 /// ```rust
 /// use page_size;
-/// use align::alignment::{self, Alignment};
+/// use aligners::alignment::{self, Alignment};
 ///
 /// assert_eq!(page_size::get(), alignment::Page::size());
 /// ```
