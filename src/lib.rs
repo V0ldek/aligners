@@ -109,17 +109,23 @@
 //!
 //! ## Note on alignment checking
 //!
-//! Checking alignment is hard. [`std::ptr::align_offset`] can return [`std::usize::MAX`]
+//! Checking alignment is hard.
+#![cfg_attr(docsrs, doc = "[`pointer::align_offset`]")]
+#![cfg_attr(not(docsrs), doc = "`pointer::align_offset`")]
+//! can return [`usize::MAX`]
 //! without any reason and it explicitly says that it should not be relied on for correctness.
 //!
 //! The above examples ignore that for assertion purposes, because there is no better way.
-//! In reality, the check in [`align_offset`](std::ptr::align_offset) just checks the remainder
+//! In reality, the check in
+#![cfg_attr(docsrs, doc = "[`align_offset`](pointer::align_offset)")]
+#![cfg_attr(not(docsrs), doc = "`align_offset`")]
+//! just checks the remainder
 //! of the pointer's integer representation, plus some additional bounds checking, so it is
 //! fine for testing purposes on most platforms.
 //!
 //! This is an additional benefit of using `aligners`, as it is a strong guarantee on alignment.
 //!
-//! If you disagree with this assesment, feel free to [contribute to this StackOverflow question](https://stackoverflow.com/questions/71972143/assert-that-a-pointer-is-aligned-to-some-value).
+//! If you disagree with this assessment, feel free to [contribute to this StackOverflow question](https://stackoverflow.com/questions/71972143/assert-that-a-pointer-is-aligned-to-some-value).
 //!
 
 pub mod alignment;
