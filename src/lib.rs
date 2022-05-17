@@ -136,6 +136,9 @@ mod bytes;
 mod iterators;
 mod slice;
 
+#[cfg(test)]
+pub(crate) mod test;
+
 pub use bytes::*;
 pub use iterators::*;
 pub use slice::*;

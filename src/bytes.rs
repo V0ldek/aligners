@@ -269,12 +269,17 @@ impl<A: Alignment> Default for AlignedBytes<A> {
 
 #[cfg(test)]
 mod tests {
+    use crate::test::assert_aligned;
     use crate::{alignment, AlignedBytes};
 
     #[test]
     fn empty_bytes_are_aligned() {
         let empty: AlignedBytes<alignment::Eight> = Default::default();
-
-        assert_eq!(0, empty.as_ptr().align_offset(8));
+        assert_aligned(empty.as_ptr(), 8);
+    }
+    #[test]
+    fn new_initialize_is_aligned() {
+        let bytes: AlignedBytes<alignment::TwoTo<15>> = AlignedBytes::new_initialize(2137, |_| 1);
+        assert_aligned(bytes.as_ptr(), 2usize.pow(15));
     }
 }

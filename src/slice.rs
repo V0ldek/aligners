@@ -231,19 +231,18 @@ impl<A: Alignment> Default for &mut AlignedSlice<A> {
 
 #[cfg(test)]
 mod tests {
+    use crate::test::assert_aligned;
     use crate::{alignment, AlignedSlice};
 
     #[test]
     fn empty_slice_is_aligned() {
         let empty: &AlignedSlice<alignment::Eight> = Default::default();
-
-        assert_eq!(0, empty.as_ptr().align_offset(8));
+        assert_aligned(empty.as_ptr(), 8);
     }
 
     #[test]
     fn empty_mut_slice_is_aligned() {
         let empty: &mut AlignedSlice<alignment::Eight> = Default::default();
-
-        assert_eq!(0, empty.as_ptr().align_offset(8));
+        assert_aligned(empty.as_ptr(), 8);
     }
 }
