@@ -1,6 +1,6 @@
 # `aligners` &ndash; strongly typed memory alignment guarantees
 
-[![Rust](https://github.com/V0ldek/aligner/actions/workflows/rust.yml/badge.svg)](https://github.com/V0ldek/aligners/actions/workflows/rust.yml)
+[![Rust](https://github.com/V0ldek/aligners/actions/workflows/rust.yml/badge.svg)](https://github.com/V0ldek/aligners/actions/workflows/rust.yml)
 
 Some bytes just need to be aligned. Want to process bytes in batches of $8$ by interpreting them as `u64`? They must be $8$-byte aligned. Want to run SIMD operations on your bytes? You need to use special unaligned instructions and risk performance, or align them with target's requirements. Maybe your high-performance algorithm requires page alignment?
 

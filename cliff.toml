@@ -26,7 +26,7 @@ body = """
             {% endfor %}\
         {% endif %}\
         {% if commit.links %}
-            <tiny>Related issues: \
+            <tiny>Related: \
             {% for link in commit.links %}\
                 [{{ link.text }}]({{ link.href }}) \
             {% endfor %}\
@@ -70,6 +70,5 @@ date_order = false
 sort_commits = "oldest"
 # An array of link parsers for extracting external references, and turning them into URLs, using regex.
 link_parsers = [
-    { pattern = "#(\\d+)", href = "https://github.com/V0ldek/align/issues/$1" },
-    { pattern = "!(\\d+)", href = "https://github.com/V0ldek/align/pull/$1" }
+    { pattern = "#(\\d+)", href = "https://github.com/V0ldek/aligners/issues/$1" }
 ]
