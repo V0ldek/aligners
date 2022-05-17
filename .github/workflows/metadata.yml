@@ -68,4 +68,4 @@ jobs:
           add: "CHANGELOG.md --force deps.png --force"
           default_author: github_actions
           message: "chore: update CHANGELOG.md and deps.png" 
-          push: true
+          push: origin main --force
