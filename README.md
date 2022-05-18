@@ -1,14 +1,14 @@
 # `aligners` &ndash; strongly typed memory alignment guarantees
 
 [![Rust](https://github.com/V0ldek/aligners/actions/workflows/rust.yml/badge.svg)](https://github.com/V0ldek/aligners/actions/workflows/rust.yml)
-![docs.rs](https://img.shields.io/docsrs/aligners?logo=docs.rs)
-![GitHub last commit](https://img.shields.io/github/last-commit/v0ldek/aligners?logo=github)
+[![docs.rs](https://img.shields.io/docsrs/aligners?logo=docs.rs)](https://docs.rs/aligners)
+[![GitHub last commit](https://img.shields.io/github/last-commit/v0ldek/aligners?logo=github)](https://github.com/V0ldek/aligners/commits/main)
 
-![Crates.io](https://img.shields.io/crates/v/aligners?logo=docs.rs)
-![GitHub Release Date](https://img.shields.io/github/release-date/v0ldek/aligners)
+[![Crates.io](https://img.shields.io/crates/v/aligners?logo=docs.rs)](https://crates.io/crates/aligners)
+[![GitHub Release Date](https://img.shields.io/github/release-date/v0ldek/aligners)](https://github.com/V0ldek/aligners/releases)
 
-![Crates.io](https://img.shields.io/crates/l/aligners)
-![Lines of code](https://img.shields.io/tokei/lines/github/v0ldek/aligners?label=LoC&logo=rust)
+[![Crates.io](https://img.shields.io/crates/l/aligners)](https://choosealicense.com/licenses/mit/)
+[![Lines of code](https://img.shields.io/tokei/lines/github/v0ldek/aligners?label=LoC&logo=rust)](https://github.com/V0ldek/aligners/tree/main/src)
 
 Some bytes just need to be aligned. Want to process bytes in batches of 8 by interpreting them as `u64`? They must be 8-byte aligned. Want to run SIMD operations on your bytes? You need to use special unaligned instructions and risk performance, or align them with target's requirements. Maybe your high-performance algorithm requires page alignment?
 
@@ -26,6 +26,9 @@ That's it. `AlignedBytes<A>` owns the bytes. By taking a reference you get `&Ali
 ## Status
 
 This crate is under active development and the API is unstable. It contains the MVP of being able to align your bytes to page or SIMD-block boundary and iterate over aligned blocks.
+
+The crate is continuously built and tested on a number of architectures. We also use [Miri](https://github.com/rust-lang/miri) on multiple
+target triples to test for hard-to-find bugs.
 
 ## Unsafety
 
