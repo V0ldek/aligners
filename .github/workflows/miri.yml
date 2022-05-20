@@ -36,6 +36,14 @@ jobs:
             triple: mips64-unknown-linux-gnuabi64
             simd: false 
           - os: windows-latest
+            triple: x86_64-pc-windows-gnu
+            simd: true
+            feature: avx2
+          - os: windows-latest
+            triple: x86_64-pc-windows-msvc
+            simd: true
+            feature: avx2
+          - os: windows-latest
             triple: i686-pc-windows-gnu
             simd: true
             feature: avx2
