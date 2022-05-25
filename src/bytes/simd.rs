@@ -61,7 +61,6 @@ mod tests {
         assert_eq!(bytes.len(), 0);
     }
 
-    #[cfg(feature = "simd")]
     #[test]
     fn block_alignment_from_page_alignment_is_identity() {
         let slice = (0..=47).collect::<Vec<u8>>();
