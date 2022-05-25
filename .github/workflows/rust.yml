@@ -106,7 +106,7 @@ jobs:
       - name: Rustup ${{ matrix.rust }} toolchain
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: ${{ matrix.rust }}
+          toolchain: stable
           override: true
           default: true
       - name: Cache restore
