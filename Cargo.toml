@@ -18,6 +18,9 @@ cfg-if = "1.0.0"
 lazy_static = "1.4.0"
 page_size = "0.4.2"
 
+[dev-dependencies]
+anyhow = "1.0.57"
+
 [features]
 default = ["simd"]
 simd = []
