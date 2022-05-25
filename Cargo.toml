@@ -1,6 +1,6 @@
 [package]
 name = "aligners"
-version = "0.0.3"
+version = "0.0.4"
 authors = ["Mateusz Gienieczko <mat@gienieczko.com>"]
 edition = "2021"
 description = "Utilities for alignment guarantees for data."

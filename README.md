@@ -1,14 +1,14 @@
 # `aligners` &ndash; strongly typed memory alignment guarantees
 
 [![Rust](https://github.com/V0ldek/aligners/actions/workflows/rust.yml/badge.svg)](https://github.com/V0ldek/aligners/actions/workflows/rust.yml)
+[![Miri](https://github.com/V0ldek/aligners/actions/workflows/miri.yml/badge.svg)](https://github.com/V0ldek/aligners/actions/workflows/miri.yml)
 [![docs.rs](https://img.shields.io/docsrs/aligners?logo=docs.rs)](https://docs.rs/aligners)
-[![GitHub last commit](https://img.shields.io/github/last-commit/v0ldek/aligners?logo=github)](https://github.com/V0ldek/aligners/commits/main)
 
 [![Crates.io](https://img.shields.io/crates/v/aligners?logo=docs.rs)](https://crates.io/crates/aligners)
 [![GitHub Release Date](https://img.shields.io/github/release-date/v0ldek/aligners)](https://github.com/V0ldek/aligners/releases)
+[![GitHub last commit](https://img.shields.io/github/last-commit/v0ldek/aligners?logo=github)](https://github.com/V0ldek/aligners/commits/main)
 
 [![Crates.io](https://img.shields.io/crates/l/aligners)](https://choosealicense.com/licenses/mit/)
-[![Lines of code](https://img.shields.io/tokei/lines/github/v0ldek/aligners?label=LoC&logo=rust)](https://github.com/V0ldek/aligners/tree/main/src)
 
 Some bytes just need to be aligned. Want to process bytes in batches of 8 by interpreting them as `u64`? They must be 8-byte aligned. Want to run SIMD operations on your bytes? You need to use special unaligned instructions and risk performance, or align them with target's requirements. Maybe your high-performance algorithm requires page alignment?
 
