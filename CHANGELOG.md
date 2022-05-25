@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.4] - 2022-05-25
+
+### Features
+
+#### Support `sse` target feature.
+- When the `sse` target feature is enabled
+on x86/x86_64 the `SimdBlock` size is 16 bytes,
+unless a target feature with a larger vector is also enabled.
+
+Related: [#18](https://github.com/V0ldek/aligners/issues/18)
+### Reliability
+
+#### Miri test on windows targets.
+
+#### Added `simd_alignment_test`.
+- Test whether the size of `SimdBlock` agrees with the expected one
+for a given target.
+
+#### Added simd-size-matrix test.
+- Use `simd_alignment_test` to check whether `SimdBlock` sizes
+remain consistent across targets.
+
 ## [0.0.3] - 2022-05-18
 
 
