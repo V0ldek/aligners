@@ -65,6 +65,7 @@ aligners v0.0.1
 #### Dev
 
 - `cargo-hack` &ndash; used for more robust testing by compiling and running the code for the feature powerset.
+- `anyhow` &ndash; used in the `simd_alignment_test` to make error handling easy.
 
 ## `crev`
 

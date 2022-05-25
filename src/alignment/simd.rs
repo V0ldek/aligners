@@ -9,11 +9,13 @@ use cfg_if::cfg_if;
 /// # Alignments
 ///
 /// The alignment size will be the first entry in the below table
-/// that is supported by the target CPU.
+/// that is supported by the target CPU, as long as the application
+/// is compiled with the appropriate [target feature](https://doc.rust-lang.org/reference/conditional-compilation.html#target_feature).
 ///
 /// | CPU feature     | Alignment (bytes) |
 /// |-----------------|------------------:|
 /// | AVX2            | 32                |
+/// | SSE             | 16                |
 #[derive(Debug)]
 #[cfg_attr(docsrs, doc(cfg(feature = "simd")))]
 pub struct SimdBlock {}
@@ -39,11 +41,15 @@ unsafe impl Alignment for SimdBlock {
     #[inline(always)]
     fn size() -> usize {
         cfg_if! {
-            if #[cfg(all(
-                any(target_arch = "x86", target_arch = "x86_64"),
-                target_feature = "avx2",
-            ))] {
-                32
+            if #[cfg(any(target_arch = "x86", target_arch = "x86_64"))] {
+                cfg_if! {
+                    if #[cfg(target_feature = "avx2")] {
+                        32
+                    }
+                    else if #[cfg(target_feature = "sse")] {
+                        16
+                    }
+                }
             } else if #[cfg(doc)] {
                 32
             }
