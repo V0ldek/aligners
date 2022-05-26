@@ -29,11 +29,51 @@ meaning "I'd be happy if someone implemented this and it's relatively straightfo
 Go to the issue and post a comment that you're going to work on it. [Fork the repo](https://github.com/V0ldek/align/fork),
 write your feature of fix, then create a PR.
 
+### Setting up local development
+
+The only non-standard tool that you might need is [`cargo-hack`](https://lib.rs/crates/cargo-hack) and Python.
+You can install the former with
+
+```bash
+cargo install cargo-hack
+```
+
+To run the test suite locally use:
+
+```bash
+cargo hack test --feature-powerset --skip default
+```
+
+**Note:** this requires your machine to support AVX2, as it is the default set in `.cargo/config.toml`.
+There are two solutions if that doesn't work for you:
+
+- If your machine supports a different SIMD target feature that is supported by `aligners`, run the command
+with custom `RUSTFLAGS` environment variable set to `-C target-feature=+<your-feature-here>`..
+- If your machine doesn't have any supported SIMD extensions, test only without the `simd` feature:
+```bash
+cargo hack test --feature-powerset --skip default --skip simd
+```
+
+To test the `SimdBlock` size depending on target features, run `./tests/test_simd_sizes.py`. It assumes
+that your default `/bin/python` is Python 3, if that's not the case you can manually ask Python to run the script
+with `python3 ./tests/test_simd_sizes.py`.
+
+There is no automated way to locally run the Miri test suite.
+You need to get familiar with [Miri](https://github.com/rust-lang/miri), install it,
+and then manually run the test for a target triple of your choice.
+
+```bash
+MIRIFLAGS="-Zmiri-symbolic-alignment-check -Zmiri-strict-provenance" cargo +nightly miri test --target x86_64-unknown-linux-gnu --no-default-features
+```
+
+_**Note:** Miri does not support SIMD, so currently we test only the code without the `simd` feature._
+
 ### Guidelines
 
 1. Use standard `rustfmt` settings for formatting.
 2. Lint your code with [`clippy`](https://github.com/rust-lang/rust-clippy).
 3. Follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/), more on it below.
+4. Avoid adding new dependencies to Cargo.toml unless there is a good reason for them.
 
 ### Commit messages
 
