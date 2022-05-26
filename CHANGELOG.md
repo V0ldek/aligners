@@ -10,10 +10,13 @@ All notable changes to this project will be documented in this file.
 - When the `avx512f` target feature is enabled
 the `SimdBlock` is set to 64 bytes.
 
+Related: [#23](https://github.com/V0ldek/aligners/issues/18)
+
 #### Relax AVX2 requirement to AVX.
 - AVX already includes 256-bit SIMD vectors, so using it
 as the trigger for `SimdBlock` instead of AVX2 makes more sense
 
+Related: [#22](https://github.com/V0ldek/aligners/issues/18)
 
 ### Reliability
 
