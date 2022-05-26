@@ -75,40 +75,19 @@ jobs:
   simd-sizes:
     name: SIMD size test matrix
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        config:
-          - feature: avx2
-            triple: x86_64-unknown-linux-gnu
-            size: 32
-          - feature: sse
-            triple: x86_64-unknown-linux-gnu
-            size: 16
-          - feature: sse2
-            triple: x86_64-unknown-linux-gnu
-            size: 16
-          - feature: sse3
-            triple: x86_64-unknown-linux-gnu
-            size: 16
-          - feature: sse4.1
-            triple: x86_64-unknown-linux-gnu
-            size: 16
-          - feature: sse4.2
-            triple: x86_64-unknown-linux-gnu
-            size: 16
-          - feature: ssse3
-            triple: x86_64-unknown-linux-gnu
-            size: 16
     steps:
       - name: Checkout sources
         uses: actions/checkout@v3
-      - name: Rustup ${{ matrix.rust }} toolchain
+      - name: Rustup stable toolchain
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-          override: true
-          default: true
+      - name: Rustup nightly toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+      - name: Setup Python
+        uses: actions/setup-python@v3.1.2
       - name: Cache restore
         id: cache-restore
         uses: actions/cache@v3
@@ -120,21 +99,8 @@ jobs:
             ~/.cargo/git/db/
             target/
           key: simd-sizes-${{ matrix.config.feature }}-cargo-${{ hashFiles('**/Cargo.toml') }}
-      - name: Build ${{ matrix.config.feature }}
-        uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --target ${{ matrix.config.triple }}
-        env:
-          RUSTFLAGS: "-C target-feature=+${{ matrix.config.feature }}"
-      - name: Test ${{ matrix.config.feature }}
-        uses: actions-rs/cargo@v1
-        with:
-          command: test
-          args: simd_alignment_test --target ${{ matrix.config.triple }} -- --include-ignored
-        env:
-          RUSTFLAGS: "-C target-feature=+${{ matrix.config.feature }}"
-          ALIGNERS_TEST_SIMD_EXPECTED_SIZE: "${{ matrix.config.size }}"
+      - name: Run test_simd_sizes.py
+        run: python ./tests/test_simd_sizes.py
 
   clippy:
     permissions:
