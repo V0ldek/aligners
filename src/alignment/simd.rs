@@ -14,6 +14,7 @@ use cfg_if::cfg_if;
 ///
 /// | CPU feature     | Alignment (bytes) |
 /// |-----------------|------------------:|
+/// | AVX512          | 64                |
 /// | AVX2            | 32                |
 /// | SSE             | 16                |
 #[derive(Debug)]
@@ -43,7 +44,10 @@ unsafe impl Alignment for SimdBlock {
         cfg_if! {
             if #[cfg(any(target_arch = "x86", target_arch = "x86_64"))] {
                 cfg_if! {
-                    if #[cfg(target_feature = "avx2")] {
+                    if #[cfg(target_feature = "avx512f")] {
+                        64
+                    }
+                    else if #[cfg(target_feature = "avx2")] {
                         32
                     }
                     else if #[cfg(target_feature = "sse")] {
