@@ -47,7 +47,7 @@ unsafe impl Alignment for SimdBlock {
                     if #[cfg(target_feature = "avx512f")] {
                         64
                     }
-                    else if #[cfg(target_feature = "avx2")] {
+                    else if #[cfg(target_feature = "avx")] {
                         32
                     }
                     else if #[cfg(target_feature = "sse")] {
