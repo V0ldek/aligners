@@ -1,12 +1,14 @@
 #!/bin/python3
 import os
 
+
 class TestCase:
     def __init__(self, feature, target_triple, toolchain, size):
         self.feature = feature
         self.target_triple = target_triple
         self.toolchain = toolchain
         self.size = size
+
 
 def system_succeed(cmd):
     print(f"Executing {cmd}")
@@ -15,8 +17,10 @@ def system_succeed(cmd):
         print(f"Command {cmd} failed with exit code {ret}")
         exit(ret)
 
+
 x86 = "x86_64-unknown-linux-gnu"
 matrix = [
+    TestCase("avx", x86, "stable", 32),
     TestCase("avx2", x86, "stable", 32),
     TestCase("sse", x86, "stable", 16),
     TestCase("sse2", x86, "stable", 16),
@@ -37,7 +41,9 @@ on {test_case.target_triple}")
     rustup = f"rustup override set {test_case.toolchain}"
     build = f"cargo build --target {test_case.target_triple}"
     test = f"cargo test simd_alignment_test --target {test_case.target_triple} -- --include-ignored"
-    
+
     system_succeed(rustup)
     system_succeed(f"RUSTFLAGS=\"{rustflags}\" {build}")
-    system_succeed(f"ALIGNERS_TEST_SIMD_EXPECTED_SIZE={test_case.size} RUSTFLAGS=\"{rustflags}\" {test}")
+    system_succeed(
+        f"ALIGNERS_TEST_SIMD_EXPECTED_SIZE={test_case.size} RUSTFLAGS=\"{rustflags}\" {test}")
+    print("TEST CASE OK")

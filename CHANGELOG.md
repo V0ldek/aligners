@@ -8,14 +8,18 @@ All notable changes to this project will be documented in this file.
 
 #### Add support for AVX512.
 - When the `avx512f` target feature is enabled
-- the `SimdBlock` is set to 64 bytes.
+the `SimdBlock` is set to 64 bytes.
+
+#### Relax AVX2 requirement to AVX.
+- AVX already includes 256-bit SIMD vectors, so using it
+as the trigger for `SimdBlock` instead of AVX2 makes more sense
 
 
 ### Reliability
 
 #### Enable local simd-size-matrix tests.
 - One can use the `test_simd_sizes.py` script
-- to run the simd-size test matrix locally.
+to run the simd-size test matrix locally.
 
 ## [0.0.4] - 2022-05-25
 
