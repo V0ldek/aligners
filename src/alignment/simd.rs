@@ -12,11 +12,14 @@ use cfg_if::cfg_if;
 /// that is supported by the target CPU, as long as the application
 /// is compiled with the appropriate [target feature](https://doc.rust-lang.org/reference/conditional-compilation.html#target_feature).
 ///
-/// | CPU feature     | Alignment (bytes) |
-/// |-----------------|------------------:|
-/// | AVX512          | 64                |
-/// | AVX2            | 32                |
-/// | SSE             | 16                |
+/// | CPU feature     | Alignment (bytes) | Required `target_feature`      |
+/// |:----------------|------------------:|-------------------------------:|
+/// | AVX512          | 64                | `avx512f`                      |
+/// | AVX             | 32                | any of `avx`, `avx2`           |
+/// | SSE             | 16                | any of `sse`, `sse2`, `sse3`, <br/> `sse4.1`, `sse4.2`, `ssse3` |
+///
+/// If the target does not support any of these extensions, the compilation will fail.
+/// In that case you need to disable the `simd` feature.
 #[derive(Debug)]
 #[cfg_attr(docsrs, doc(cfg(feature = "simd")))]
 pub struct SimdBlock {}
