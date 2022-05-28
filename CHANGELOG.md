@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.6] - 2022-05-28
+
+### Bug Fixes
+
+#### Take `FnMut` in `new_initialize`.
+- `Fn` is unnecessarily prohibitive, `FnMut` allows more initialisation functions.
+
 ## [0.0.5] - 2022-05-27
 
 ### Features
