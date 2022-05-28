@@ -90,9 +90,9 @@ impl<A: Alignment> AlignedBytes<A> {
     /// assert_eq!(aligned, [0, 1, 0, 1, 0, 1, 0, 1]);
     /// ```
     #[inline]
-    pub fn new_initialize<F>(size: usize, f: F) -> Self
+    pub fn new_initialize<F>(size: usize, mut f: F) -> Self
     where
-        F: Fn(usize) -> u8,
+        F: FnMut(usize) -> u8,
     {
         // SAFETY:
         // All bytes are initialized right after.
