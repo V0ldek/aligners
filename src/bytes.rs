@@ -159,9 +159,14 @@ impl<A: Alignment> AlignedBytes<A> {
     }
 
     /// Return the size of the alignment in bytes.
+    ///
+    /// ## Note
+    /// This does not reflect the actual maximal alignment,
+    /// only the guarantee provided by `A`, which may be lower than
+    /// the actual alignment.
     #[must_use]
     #[inline(always)]
-    pub fn alignment_size() -> usize {
+    pub fn alignment_size(&self) -> usize {
         A::size()
     }
 
@@ -281,5 +286,12 @@ mod tests {
     fn new_initialize_is_aligned() {
         let bytes: AlignedBytes<alignment::TwoTo<15>> = AlignedBytes::new_initialize(2137, |_| 1);
         assert_aligned(bytes.as_ptr(), 2usize.pow(15));
+    }
+
+    #[test]
+    fn alignment_size_equal_to_alignment_type() {
+        let bytes: AlignedBytes<alignment::TwoTo<7>> = AlignedBytes::new_zeroed(1024);
+
+        assert_eq!(128, bytes.alignment_size());
     }
 }
