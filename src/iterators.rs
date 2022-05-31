@@ -53,6 +53,18 @@ impl<A: Alignment> AlignedBlock<A> {
     pub fn is_empty(&self) -> bool {
         self.slice.is_empty()
     }
+
+    /// Return the size of the alignment in bytes. Equal to [`A::size()`](`Alignment::size`).
+    ///
+    /// ## Note
+    /// This does not reflect the actual maximal alignment,
+    /// only the guarantee provided by `A`, which may be lower than
+    /// the actual alignment.
+    #[must_use]
+    #[inline(always)]
+    pub fn alignment_size(&self) -> usize {
+        A::size()
+    }
 }
 
 impl<'a, A: Alignment> Iterator for AlignedBlockIterator<'a, A> {
@@ -90,3 +102,17 @@ impl<'a, A: Alignment> Iterator for AlignedBlockIterator<'a, A> {
 impl<A: Alignment> ExactSizeIterator for AlignedBlockIterator<'_, A> {}
 
 impl<A: Alignment> FusedIterator for AlignedBlockIterator<'_, A> {}
+
+#[cfg(test)]
+mod tests {
+    use crate::{alignment, AlignedBytes};
+
+    #[test]
+    fn alignment_size_equal_to_alignment_type() {
+        let bytes: AlignedBytes<alignment::TwoTo<7>> = AlignedBytes::new_zeroed(1024);
+        let mut iter = bytes.iter_blocks();
+        let block = iter.next().unwrap();
+
+        assert_eq!(128, block.alignment_size());
+    }
+}

@@ -53,6 +53,18 @@ impl<A: Alignment> AlignedSlice<A> {
         unsafe { std::mem::transmute(&self[offset_in_bytes..]) }
     }
 
+    /// Return the size of the alignment in bytes.
+    ///
+    /// ## Note
+    /// This does not reflect the actual maximal alignment,
+    /// only the guarantee provided by `A`, which may be lower than
+    /// the actual alignment.
+    #[must_use]
+    #[inline(always)]
+    pub fn alignment_size(&self) -> usize {
+        A::size()
+    }
+
     /// Return an iterator over consecutive aligned blocks of the slice.
     #[must_use]
     #[inline]
@@ -232,7 +244,7 @@ impl<A: Alignment> Default for &mut AlignedSlice<A> {
 #[cfg(test)]
 mod tests {
     use crate::test::assert_aligned;
-    use crate::{alignment, AlignedSlice};
+    use crate::{alignment, AlignedBytes, AlignedSlice};
 
     #[test]
     fn empty_slice_is_aligned() {
@@ -244,5 +256,13 @@ mod tests {
     fn empty_mut_slice_is_aligned() {
         let empty: &mut AlignedSlice<alignment::Eight> = Default::default();
         assert_aligned(empty.as_ptr(), 8);
+    }
+
+    #[test]
+    fn alignment_size_equal_to_alignment_type() {
+        let bytes: AlignedBytes<alignment::TwoTo<7>> = AlignedBytes::new_zeroed(1024);
+        let slice: &AlignedSlice<alignment::TwoTo<7>> = &bytes;
+
+        assert_eq!(128, slice.alignment_size());
     }
 }
