@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.7] - 2022-06-03
+
+### Features
+
+#### `alignment_size` function for aligned types.
+- Allows getting the `alignment` size as a method instead of static.
+
+<tiny>Related: [#29](https://github.com/V0ldek/aligners/issues/29)</tiny>
+
 ## [0.0.6] - 2022-05-28
 
 ### Bug Fixes
@@ -17,13 +26,13 @@ All notable changes to this project will be documented in this file.
 - When the `avx512f` target feature is enabled
 the `SimdBlock` is set to 64 bytes.
 
-Related: [#23](https://github.com/V0ldek/aligners/issues/18)
+<tiny>Related: [#23](https://github.com/V0ldek/aligners/issues/18)</tiny>
 
 #### Relax AVX2 requirement to AVX.
 - AVX already includes 256-bit SIMD vectors, so using it
 as the trigger for `SimdBlock` instead of AVX2 makes more sense
 
-Related: [#22](https://github.com/V0ldek/aligners/issues/18)
+<tiny>Related: [#22](https://github.com/V0ldek/aligners/issues/18)</tiny>
 
 ### Reliability
 
@@ -40,7 +49,8 @@ to run the simd-size test matrix locally.
 on x86/x86_64 the `SimdBlock` size is 16 bytes,
 unless a target feature with a larger vector is also enabled.
 
-Related: [#18](https://github.com/V0ldek/aligners/issues/18)
+<tiny>Related: [#18](https://github.com/V0ldek/aligners/issues/18)</tiny>
+
 ### Reliability
 
 #### Miri test on windows targets.
