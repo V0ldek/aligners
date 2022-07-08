@@ -25,7 +25,7 @@ pub unsafe trait Alignment {
 /// assert_eq!(64, alignment::TwoTo::<6>::size());
 /// ```
 #[derive(Debug)]
-pub struct TwoTo<const N: u32> {}
+pub enum TwoTo<const N: u32> {}
 
 /// Alignment to 1 byte, so no special alignment &ndash; every slice is always one-byte-aligned.
 ///
@@ -80,7 +80,7 @@ pub type Eight = TwoTo<3>;
 /// assert_eq!(page_size::get(), alignment::Page::size());
 /// ```
 #[derive(Debug)]
-pub struct Page {}
+pub enum Page {}
 
 // SAFETY:
 // 2^N is a power of two (duh).

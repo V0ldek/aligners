@@ -22,7 +22,7 @@ use cfg_if::cfg_if;
 /// In that case you need to disable the `simd` feature.
 #[derive(Debug)]
 #[cfg_attr(docsrs, doc(cfg(feature = "simd")))]
-pub struct SimdBlock {}
+pub enum SimdBlock {}
 
 /// Alignment to two SIMD blocks guarantee.
 ///
@@ -37,7 +37,7 @@ pub struct SimdBlock {}
 /// ```
 #[derive(Debug)]
 #[cfg_attr(docsrs, doc(cfg(feature = "simd")))]
-pub struct TwoSimdBlocks {}
+pub enum TwoSimdBlocks {}
 
 // SAFETY:
 // Always returning a const value that is a power of two.
