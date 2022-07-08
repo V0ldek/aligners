@@ -85,6 +85,33 @@ impl<A: Alignment> Ord for AlignedBytes<A> {
 impl<A: Alignment> std::hash::Hash for AlignedBytes<A> {
     #[inline]
     fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
-        std::hash::Hash::hash(&self.as_ptr(), state)
+        let slice: &[u8] = self;
+        std::hash::Hash::hash(slice, state)
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+    use crate::alignment::*;
+
+    #[test]
+    fn hash_of_two_equal_structures_is_equal() {
+        use std::{
+            collections::hash_map::DefaultHasher,
+            hash::{Hash, Hasher},
+        };
+        let bytes1: AlignedBytes<One> = AlignedBytes::new_zeroed(4);
+        let bytes2: AlignedBytes<One> = AlignedBytes::new_zeroed(4);
+
+        let mut s1 = DefaultHasher::new();
+        bytes1.hash(&mut s1);
+        let h1 = s1.finish();
+
+        let mut s2 = DefaultHasher::new();
+        bytes2.hash(&mut s2);
+        let h2 = s2.finish();
+
+        assert_eq!(h1, h2);
     }
 }
