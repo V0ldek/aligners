@@ -25,6 +25,7 @@
 // Same goes for the revolutionary "link to pointers documentation" feature.
 // (https://github.com/rust-lang/rust/issues/80896).
 #![cfg_attr(docsrs, feature(intra_doc_pointers))]
+#![cfg_attr(miri, feature(strict_provenance))]
 
 //! Structures providing guarantees on byte sequence alignment.
 //!

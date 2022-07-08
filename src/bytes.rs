@@ -261,7 +261,13 @@ impl<A: Alignment> Default for AlignedBytes<A> {
         // but for `A::size()` alignment.
         // The only requirement of new_unchecked is the pointer being not-null, and A::size() must be > 0.
         let bytes_ptr = unsafe {
+            // Use strict pointer functions if enabled.
+            // See https://github.com/V0ldek/aligners/issues/34
+            #[cfg(miri)]
+            let raw_ptr = std::ptr::invalid_mut(A::size());
+            #[cfg(not(miri))]
             let raw_ptr = A::size() as *mut u8;
+
             NonNull::new_unchecked(raw_ptr)
         };
         Self {

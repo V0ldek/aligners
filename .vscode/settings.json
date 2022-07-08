@@ -3,6 +3,7 @@
         "crev",
         "dealloc",
         "docsrs",
+        "miri",
         "powerset",
         "repr",
         "Unsafety"
