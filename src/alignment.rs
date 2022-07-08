@@ -20,7 +20,7 @@ pub unsafe trait Alignment {
 ///
 /// # Examples
 /// ```rust
-/// use aligners::alignment::{self, Alignment};WS
+/// use aligners::alignment::{self, Alignment};
 ///
 /// assert_eq!(64, alignment::TwoTo::<6>::size());
 /// ```
