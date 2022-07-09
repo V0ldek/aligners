@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.8] - 2022-07-09
+
+### Features
+
+#### Make `Default` conform to strict provenance.
+
+<tiny>Related: [#34](https://github.com/V0ldek/aligners/issues/34) </tiny>
+
+#### Made `Alignment` types empty.
+
+<tiny>Related: [#31](https://github.com/V0ldek/aligners/issues/31) </tiny>
+
+
+### Bug Fixes
+
+#### Invalid `Hash` impl for `AlignedBytes`.
+
+<tiny>Related: [#33](https://github.com/V0ldek/aligners/issues/33) </tiny>
+
 ## [0.0.7] - 2022-06-03
 
 ### Features
