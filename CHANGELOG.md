@@ -2,22 +2,31 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.9] - 2022-07-25
+
+### Features
+
+#### Rework `TwoSimdBlocks` into `Twice`
+
+- `TwoSimdBlocks` got removed
+- `Twice<A>` gives an alignment guarantee of two blocks of A
+- `halves` on aligned block of `Twice<A>` splits a block into two smaller alignments
+
 ## [0.0.8] - 2022-07-09
 
 ### Features
 
-#### Make `Default` conform to strict provenance.
+#### Make `Default` conform to strict provenance
 
 <tiny>Related: [#34](https://github.com/V0ldek/aligners/issues/34) </tiny>
 
-#### Made `Alignment` types empty.
+#### Made `Alignment` types empty
 
 <tiny>Related: [#31](https://github.com/V0ldek/aligners/issues/31) </tiny>
 
-
 ### Bug Fixes
 
-#### Invalid `Hash` impl for `AlignedBytes`.
+#### Invalid `Hash` impl for `AlignedBytes`
 
 <tiny>Related: [#33](https://github.com/V0ldek/aligners/issues/33) </tiny>
 
@@ -25,7 +34,8 @@ All notable changes to this project will be documented in this file.
 
 ### Features
 
-#### `alignment_size` function for aligned types.
+#### `alignment_size` function for aligned types
+
 - Allows getting the `alignment` size as a method instead of static.
 
 <tiny>Related: [#29](https://github.com/V0ldek/aligners/issues/29)</tiny>
@@ -34,20 +44,23 @@ All notable changes to this project will be documented in this file.
 
 ### Bug Fixes
 
-#### Take `FnMut` in `new_initialize`.
+#### Take `FnMut` in `new_initialize`
+
 - `Fn` is unnecessarily prohibitive, `FnMut` allows more initialisation functions.
 
 ## [0.0.5] - 2022-05-27
 
 ### Features
 
-#### Add support for AVX512.
+#### Add support for AVX512
+
 - When the `avx512f` target feature is enabled
 the `SimdBlock` is set to 64 bytes.
 
 <tiny>Related: [#23](https://github.com/V0ldek/aligners/issues/18)</tiny>
 
-#### Relax AVX2 requirement to AVX.
+#### Relax AVX2 requirement to AVX
+
 - AVX already includes 256-bit SIMD vectors, so using it
 as the trigger for `SimdBlock` instead of AVX2 makes more sense
 
@@ -55,7 +68,8 @@ as the trigger for `SimdBlock` instead of AVX2 makes more sense
 
 ### Reliability
 
-#### Enable local simd-size-matrix tests.
+#### Enable local simd-size-matrix tests
+
 - One can use the `test_simd_sizes.py` script
 to run the simd-size test matrix locally.
 
@@ -63,7 +77,8 @@ to run the simd-size test matrix locally.
 
 ### Features
 
-#### Support `sse` target feature.
+#### Support `sse` target feature
+
 - When the `sse` target feature is enabled
 on x86/x86_64 the `SimdBlock` size is 16 bytes,
 unless a target feature with a larger vector is also enabled.
@@ -72,26 +87,28 @@ unless a target feature with a larger vector is also enabled.
 
 ### Reliability
 
-#### Miri test on windows targets.
+#### Miri test on windows targets
 
-#### Added `simd_alignment_test`.
+#### Added `simd_alignment_test`
+
 - Test whether the size of `SimdBlock` agrees with the expected one
 for a given target.
 
-#### Added simd-size-matrix test.
+#### Added simd-size-matrix test
+
 - Use `simd_alignment_test` to check whether `SimdBlock` sizes
 remain consistent across targets.
 
 ## [0.0.3] - 2022-05-18
 
-
 ### Bug Fixes
 
-#### Impl of `Default` returning unaligned ptrs.
+#### Impl of `Default` returning unaligned ptrs
+
 - Implementations of `Default` for
--  `AlignedBytes`
--  `&AlignedSlice`
--  `&mut AlignedSlice`
+- `AlignedBytes`
+- `&AlignedSlice`
+- `&mut AlignedSlice`
 - were incorrect by using `NonNull::dangling` as the pointer.
 - That pointer need not be aligned to the specified `Alignment`.
 - This was fixed by using std's `dangling` implementation tweaked to
@@ -101,7 +118,8 @@ remain consistent across targets.
 
 ### Reliability
 
-#### Allow miri symbolic-alignment-check.
+#### Allow miri symbolic-alignment-check
+
 - Miri's `-Zmiri-symbolic-alignment-check` breaks `align_offset` to always return `usize::MAX` (that is by design), so we need to fallback to regular cast-then-modulo alignment check for tests when running under Miri.
 
 <tiny>Related: [#12](https://github.com/V0ldek/aligners/issues/12) </tiny>
@@ -110,7 +128,7 @@ remain consistent across targets.
 
 ### Features
 
-#### Added `alignment::TwoTo<N>`.
+#### Added `alignment::TwoTo<N>`
 
 <tiny>Related: [#5](https://github.com/V0ldek/aligners/issues/5) </tiny>
 
@@ -118,21 +136,21 @@ remain consistent across targets.
 
 ### Features
 
-#### Initial API.
--  Alignment types driven by the `alignment` module.
--  `AlignedBytes` -- aligned container
--  `AlignedSlice` -- type guarantee on alignment of `&[u8]`
--  `AlignedBlockIterator` -- iterate aligned blocks of a slice.
--  Quality of life implementations of `Deref` and `std::cmp` traits.
+#### Initial API
 
+- Alignment types driven by the `alignment` module.
+- `AlignedBytes` -- aligned container
+- `AlignedSlice` -- type guarantee on alignment of `&[u8]`
+- `AlignedBlockIterator` -- iterate aligned blocks of a slice.
+- Quality of life implementations of `Deref` and `std::cmp` traits.
 
 ### Reliability
 
-#### Automatically generate changelog (#1).
+#### Automatically generate changelog (#1)
 
 <tiny>Related: [#1](https://github.com/V0ldek/aligners/issues/1) </tiny>
 
-#### Use cargo-hack for feature powerset.
+#### Use cargo-hack for feature powerset
 
 <tiny>Related: [#3](https://github.com/V0ldek/aligners/issues/3) </tiny>
 
