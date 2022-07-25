@@ -2,7 +2,7 @@ use super::Alignment;
 
 /// Alignment to twice the alignment of `A`.
 ///
-/// This size is always equal to twice the size of [`A`].
+/// This size is always equal to twice the size of `A`.
 ///
 /// # Examples
 /// ```rust
