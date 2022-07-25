@@ -93,3 +93,5 @@ cfg_if! {
 
 mod page;
 pub use page::*;
+mod multiple;
+pub use multiple::*;
