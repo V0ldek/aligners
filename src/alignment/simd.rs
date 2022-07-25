@@ -24,21 +24,6 @@ use cfg_if::cfg_if;
 #[cfg_attr(docsrs, doc(cfg(feature = "simd")))]
 pub enum SimdBlock {}
 
-/// Alignment to two SIMD blocks guarantee.
-///
-/// This size is always equal to twice the size of [`SimdBlock`].
-///
-/// # Examples
-#[cfg_attr(not(feature = "simd"), doc = "```ignore")]
-#[cfg_attr(feature = "simd", doc = "```")]
-/// use aligners::alignment::{self, Alignment};
-///
-/// assert_eq!(2 * alignment::SimdBlock::size(), alignment::TwoSimdBlocks::size());
-/// ```
-#[derive(Debug)]
-#[cfg_attr(docsrs, doc(cfg(feature = "simd")))]
-pub enum TwoSimdBlocks {}
-
 // SAFETY:
 // Always returning a const value that is a power of two.
 unsafe impl Alignment for SimdBlock {
@@ -65,14 +50,5 @@ unsafe impl Alignment for SimdBlock {
                 unreachable!();
             }
         }
-    }
-}
-
-// SAFETY:
-// Safe as long as the impl for `SimdBlock` is safe, since we multiply by 2.
-unsafe impl Alignment for TwoSimdBlocks {
-    #[inline(always)]
-    fn size() -> usize {
-        SimdBlock::size() * 2
     }
 }

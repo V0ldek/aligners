@@ -1,37 +1,8 @@
-use crate::alignment::{self, Alignment};
-use crate::iterators::AlignedBlock;
-use crate::slice::AlignedSlice;
-use std::mem;
-
-impl AlignedBlock<alignment::TwoSimdBlocks> {
-    /// Split the block into two blocks aligned to [`alignment::SimdBlock`].
-    #[must_use]
-    #[inline]
-    pub fn blocks(
-        &self,
-    ) -> (
-        &AlignedBlock<alignment::SimdBlock>,
-        &AlignedBlock<alignment::SimdBlock>,
-    ) {
-        let slice: &AlignedSlice<alignment::TwoSimdBlocks> = self;
-
-        // SAFETY:
-        // AlignedBlock is a repr(transparent) over AlignedSlice, which is repr(transparent) over [u8].
-        // Both transmutes are safe. The alignment guarantee is obviously upheld, since slice is aligned
-        // to TwoSimdBlocks and the bytes are contiguous.
-        unsafe {
-            let block1 = mem::transmute(&slice[..alignment::SimdBlock::size()]);
-            let block2 = mem::transmute(&slice[alignment::SimdBlock::size()..]);
-
-            (block1, block2)
-        }
-    }
-}
-
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use crate::alignment::{self, Alignment};
     use crate::bytes::AlignedBytes;
+    use crate::slice::AlignedSlice;
 
     #[test]
     fn is_block_aligned_when_created_from_unaligned_slice() {

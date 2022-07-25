@@ -3,6 +3,7 @@ use cfg_if::cfg_if;
 use std::ptr::NonNull;
 
 mod cmp;
+mod multiple;
 
 #[doc(inline)]
 #[allow(unreachable_pub)] // False positive, this is reachable and required.
