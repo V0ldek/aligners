@@ -26,7 +26,7 @@ impl<'a, A: Alignment> AlignedBlockIterator<'a, A> {
     pub(crate) fn new(slice: &'a AlignedSlice<A>) -> Self {
         Self { bytes: slice }
     }
-    
+
     /// Skip ahead by `offset` blocks. This is equivalent to
     /// skipping `offset * A::size()` bytes of the underlying data.
     #[inline]
