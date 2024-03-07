@@ -7,7 +7,7 @@ use std::ops::{Deref, DerefMut};
 
 mod cmp;
 #[doc(inline)]
-#[allow(unreachable_pub)] // False positive, this is reachable and required.
+#[allow(unreachable_pub, unused_imports)] // False positive, this is reachable and required.
 pub use cmp::*;
 
 /// Slice of bytes aligned to a boundary represented by `A`.

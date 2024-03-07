@@ -6,7 +6,7 @@ mod cmp;
 mod multiple;
 
 #[doc(inline)]
-#[allow(unreachable_pub)] // False positive, this is reachable and required.
+#[allow(unreachable_pub, unused_imports)] // False positive, this is reachable and required.
 pub use cmp::*;
 
 cfg_if! {
@@ -14,7 +14,7 @@ cfg_if! {
         mod simd;
 
         #[doc(inline)]
-        #[allow(unreachable_pub)] // False positive, this is reachable and required.
+        #[allow(unreachable_pub, unused_imports)] // False positive, this is reachable and required.
         pub use simd::*;
     }
 }
