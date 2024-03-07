@@ -65,10 +65,7 @@ impl<A: Alignment, const N: usize> PartialEq<[u8; N]> for AlignedBytes<A> {
 impl<A: Alignment> PartialOrd for AlignedBytes<A> {
     #[inline]
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-        let slice: &AlignedSlice<A> = self;
-        let other_slice: &AlignedSlice<A> = other;
-
-        slice.partial_cmp(other_slice)
+	Some(self.cmp(other))
     }
 }
 
