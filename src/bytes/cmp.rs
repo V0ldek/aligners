@@ -65,7 +65,7 @@ impl<A: Alignment, const N: usize> PartialEq<[u8; N]> for AlignedBytes<A> {
 impl<A: Alignment> PartialOrd for AlignedBytes<A> {
     #[inline]
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-	Some(self.cmp(other))
+        Some(self.cmp(other))
     }
 }
 

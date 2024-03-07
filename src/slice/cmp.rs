@@ -60,7 +60,7 @@ impl<A: Alignment, const N: usize> PartialEq<AlignedSlice<A>> for [u8; N] {
 impl<A: Alignment> PartialOrd for AlignedSlice<A> {
     #[inline]
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-	Some(self.cmp(other))
+        Some(self.cmp(other))
     }
 }
 
