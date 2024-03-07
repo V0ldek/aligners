@@ -265,7 +265,7 @@ impl<A: Alignment> Default for AlignedBytes<A> {
             // Use strict pointer functions if enabled.
             // See https://github.com/V0ldek/aligners/issues/34
             #[cfg(miri)]
-            let raw_ptr = std::ptr::invalid_mut(A::size());
+            let raw_ptr = std::ptr::without_provenance_mut(A::size());
             #[cfg(not(miri))]
             let raw_ptr = A::size() as *mut u8;
 
